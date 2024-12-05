@@ -33,4 +33,13 @@ def Put_memo(req_memo: Memo):
     return "해당 내용의 메모는 없습니다."
 
 
-app.mount("/", StaticFiles(directory='static', html=True), name='static')
+@app.delete("/memos/{memo_id}")
+def delete_memo(memo_id):
+    for index, memo in enumerate(memos):
+        if memo.id == memo_id:
+            memos.pop(index)
+            return "수정에 성공했습니다."
+    return "해당 내용의 메모는 없습니다."
+
+
+app.mount("/", StaticFiles(directory='memo', html=True), name='memo')

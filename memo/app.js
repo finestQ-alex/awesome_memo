@@ -15,16 +15,28 @@ async function editMemo(event) {
   readMemo();
 }
 
+async function deleteMemo(event) {
+  const id = event.target.dataset.id;
+  const res = await fetch(`/memos/${id}`, {
+    method: "DELETE",
+  });
+}
+
 //43-불러온 값 디스플레이
 function displayMemo(memo) {
   const ul = document.querySelector("#memo-ul");
   const li = document.createElement("li");
   const editBtn = document.createElement("button"); //44-에디터버튼
-  li.innerText = `[id:${memo.id} > ${memo.content}]`;
+  li.innerText = `${memo.content}`;
   editBtn.innerText = "수정하기"; //44-에디터버튼
   editBtn.addEventListener("click", editMemo);
   editBtn.dataset.id = memo.id;
+  const delBtn = document.createElement("button");
+  delBtn.innerText = "삭제";
+  delBtn.addEventListener("click", deleteMemo);
+  delBtn.dataset.id = memo.id;
   ul.appendChild(li);
+  li.appendChild(delBtn);
   li.appendChild(editBtn);
 }
 
